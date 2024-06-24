@@ -33,23 +33,31 @@ export class OrderService {
 
   async payment(data) {
     try {
-      // const accessToken = Cookies.get("accessToken");
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/orders/payment"
-        // {
-        //   order_id: data.order_id,
-        //   payment_id: data.payment_id,
-        //   status: data.status,
-        // },
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${accessToken}`,
-        //   },
-        // }
-      );
-      return response;
+      const accessToken = Cookies.get("accessToken");
+      const response = await axios.post('http://localhost:8000/api/v1/orders/payment',
+        {
+          orderItems: data.orderItems,
+          paymentInfo: data.paymentInfo,
+          paidAt: data.paidAt,
+          itemsPrice: data.itemsPrice,
+          taxPrice: data.taxPrice,
+          shippingPrice: data.shippingPrice,
+          totalPrice: data.totalPrice,
+          orderStatus: data.orderStatus,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ); 
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      } else {
+        console.error('Error: URL not found in response.');
+      }
     } catch (error) {
-      throw error;
+      console.error('Error:', error);
     }
   }
 

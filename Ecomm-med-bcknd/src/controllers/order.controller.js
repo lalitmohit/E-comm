@@ -98,22 +98,33 @@ export const getMyOrders = asyncHandler(async (req, res, next) => {
 
 
 export const payment  = asyncHandler(async (req, res, next) => {
-    // const stripe = require('stripe')('sk_test_51PFtVSSBTsMBmGiruVZ5GnHmFH47f8cGTDNhLFLuolHME4oHm9mKyHx3mV9EQDWvV2cvn14E7jDchuLyao50L9zp00CHwh1GJq')
-    const stripe = new Stripe('sk_test_51PFtVSSBTsMBmGiruVZ5GnHmFH47f8cGTDNhLFLuolHME4oHm9mKyHx3mV9EQDWvV2cvn14E7jDchuLyao50L9zp00CHwh1GJq');
+    
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    const {
+      orderItems,
+      paymentInfo,
+      paidAt,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      orderStatus,
+    } = req.body;
     try {
       const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price_data: {
-              currency: "usd",
-              product_data: {
-                name: "T-shirt",
-              },
-              unit_amount: 2000,
+        
+        line_items: orderItems.map((item) => ({
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.name,
+              images: [item.image],
             },
-            quantity: 1,
+            unit_amount: parseInt(item.price * item.qty+(item.price * item.qty)*0.3 + 10), // Calculate total price of particular item adding tax and shipping
           },
-        ],
+          quantity: item.qty,
+        })),
+
         mode: "payment",
         success_url: "http://localhost:5173/",
         cancel_url: "http://localhost:5173/stepper",

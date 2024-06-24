@@ -45,36 +45,24 @@ function PaymentInfo() {
     };
 
     try {
+      await orderService.payment(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    try {
       // console.log("Data:", data)
-
       const resp = await orderService.addNewProduct(data);
-
       dispatch(clearCart());
-
       navigate("/");
     } catch (error) {
       console.error("Error adding new product:", error);
     }
   };
 
-  const payment = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/v1/orders/payment'); // Adjust URL if different
-      if (response.data.url) {
-        window.location.href = response.data.url;
-      } else {
-        console.error('Error: URL not found in response.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-
-
   return (
     <Btn
-      onClick={payment}
+      onClick={handleSubmit}
       className="bg-button-color text-xs sm:text-sm text-nav-white font-semibold px-4 py-2 rounded-lg mt-4 transition duration-400 ease-out hover:ease-in transform hover:scale-110"
     >
       Proceed Checkout

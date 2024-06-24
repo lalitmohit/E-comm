@@ -5,6 +5,6 @@ const router = Router();
 
 router.route("/newOrder").post(verifyJWT, newOrder);
 router.route("/myOrders").get(verifyJWT, getMyOrders);
-router.route("/payment").get(payment);
+router.route("/payment").post(payment);
 
 export default router;
