@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:18-alpine
+FROM node:21.7.1-alpine
 
 # Set the working directory in the container
 WORKDIR /ecomm-med-frontend

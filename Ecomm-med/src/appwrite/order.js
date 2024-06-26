@@ -8,7 +8,7 @@ export class OrderService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.post(
-        "http://localhost:8000/api/v1/orders/newOrder",
+        "http://34.27.55.167:8000/api/v1/orders/newOrder",
         {
           orderItems: data.orderItems,
           paymentInfo: data.paymentInfo,
@@ -34,7 +34,7 @@ export class OrderService {
   async payment(data) {
     try {
       const accessToken = Cookies.get("accessToken");
-      const response = await axios.post('http://localhost:8000/api/v1/orders/payment',
+      const response = await axios.post('http://34.27.55.167:8000/api/v1/orders/payment',
         {
           orderItems: data.orderItems,
           paymentInfo: data.paymentInfo,
@@ -65,7 +65,7 @@ export class OrderService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.get(
-        "http://localhost:8000/api/v1/orders/myOrders",
+        "http://34.27.55.167:8000/api/v1/orders/myOrders",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

@@ -10,7 +10,7 @@ export class AuthService {
   async createAccount({ fullname, email, password, phoneNumber }) {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/register",
+        "http://34.27.55.167:8000/api/v1/users/register",
         {
           fullname,
           email,
@@ -33,7 +33,7 @@ export class AuthService {
   async login({ email, password }) {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/login",
+        "http://34.27.55.167:8000/api/v1/users/login",
         {
           email,
           password,
@@ -53,7 +53,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.get(
-        "http://localhost:8000/api/v1/users/me",
+        "http://34.27.55.167:8000/api/v1/users/me",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -71,7 +71,7 @@ export class AuthService {
     try {
       const refreshToken = Cookies.get("refreshToken");
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/logout",
+        "http://34.27.55.167:8000/api/v1/users/logout",
         {},
         {
           headers: {
@@ -92,7 +92,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/changePassword",
+        "http://34.27.55.167:8000/api/v1/users/changePassword",
         {
           oldPassword,
           newPassword,
@@ -113,7 +113,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        "http://localhost:8000/api/v1/users/updateUserDetails",
+        "http://34.27.55.167:8000/api/v1/users/updateUserDetails",
         {
           fullname,
           email,
@@ -136,7 +136,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        "http://localhost:8000/api/v1/users/updateLocationDetails",
+        "http://34.27.55.167:8000/api/v1/users/updateLocationDetails",
         {
           address,
           city,
@@ -162,7 +162,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        "http://localhost:8000/api/v1/users/updateToSeller",
+        "http://34.27.55.167:8000/api/v1/users/updateToSeller",
         {},
         {
           headers: {

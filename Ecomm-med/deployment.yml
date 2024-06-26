@@ -33,7 +33,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: powerr/test-ecomm-med-frontend:v1
+        # image: powerr/test-ecomm-med-frontend:v1
+        image: powerr/codes-ecomm-med-frontend:v1
         ports:
         - containerPort: 5173
         resources:
