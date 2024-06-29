@@ -18,5 +18,5 @@ spec:
           ports:
             - containerPort: 5173
           env:
-            - name: REACT_APP_BACKEND_URL
+            - name: VITE_BACKEND_URL
               value: "http://backend-service:8000"
