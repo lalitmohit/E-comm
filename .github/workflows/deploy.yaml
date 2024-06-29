@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21.7.1'
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          docker build -t powerr/my-frontend:latest .
+          docker tag powerr/my-frontend:latest powerr/my-frontend:${{ github.sha }}
+          cd ..
+
+      - name: Build backend
+        run: |
+          cd backend
+          npm install
+          docker build -t powerr/my-backend:latest .
+          docker tag powerr/my-backend:latest powerr/my-backend:${{ github.sha }}
+          cd ..
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push frontend Docker image
+        run: |
+          docker push powerr/my-frontend:latest
+          docker push powerr/my-frontend:${{ github.sha }}
+
+      - name: Push backend Docker image
+        run: |
+          docker push powerr/my-backend:latest
+          docker push powerr/my-backend:${{ github.sha }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Configure kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name my-eks-cluster --region us-west-2
+
+      - name: Deploy to EKS
+        run: |
+          kubectl apply -f k8s/backend-service.yaml
+          kubectl apply -f k8s/backend-deployment.yaml
+          kubectl apply -f k8s/frontend-deployment.yaml
+          kubectl apply -f k8s/frontend-service.yaml
