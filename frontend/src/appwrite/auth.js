@@ -2,6 +2,8 @@ import conf from "../conf/conf.js";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export class AuthService {
   constructor() {
     // Initialization logic can be added here if needed
@@ -10,7 +12,7 @@ export class AuthService {
   async createAccount({ fullname, email, password, phoneNumber }) {
     try {
       const response = await axios.post(
-        "http://34.27.55.167:8000/api/v1/users/register",
+        `${backendUrl}/api/v1/users/register`,
         {
           fullname,
           email,
@@ -33,7 +35,7 @@ export class AuthService {
   async login({ email, password }) {
     try {
       const response = await axios.post(
-        "http://34.27.55.167:8000/api/v1/users/login",
+        `${backendUrl}/api/v1/users/login`,
         {
           email,
           password,
@@ -53,7 +55,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.get(
-        "http://34.27.55.167:8000/api/v1/users/me",
+        `${backendUrl}/api/v1/users/me`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -71,7 +73,7 @@ export class AuthService {
     try {
       const refreshToken = Cookies.get("refreshToken");
       const response = await axios.post(
-        "http://34.27.55.167:8000/api/v1/users/logout",
+        `${backendUrl}/api/v1/users/logout`,
         {},
         {
           headers: {
@@ -92,7 +94,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.post(
-        "http://34.27.55.167:8000/api/v1/users/changePassword",
+        `${backendUrl}/api/v1/users/changePassword`,
         {
           oldPassword,
           newPassword,
@@ -113,7 +115,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        "http://34.27.55.167:8000/api/v1/users/updateUserDetails",
+        `${backendUrl}/api/v1/users/updateUserDetails`,
         {
           fullname,
           email,
@@ -136,7 +138,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        "http://34.27.55.167:8000/api/v1/users/updateLocationDetails",
+        `${backendUrl}/api/v1/users/updateLocationDetails`,
         {
           address,
           city,
@@ -162,7 +164,7 @@ export class AuthService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        "http://34.27.55.167:8000/api/v1/users/updateToSeller",
+        `${backendUrl}/api/v1/users/updateToSeller`,
         {},
         {
           headers: {

@@ -1,13 +1,15 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 export class ProductService {
   constructor() {}
 
   async getProducts() {
     try {
       const response = await axios.get(
-        "http://34.27.55.167:8000/api/v1/products/products"
+        `${backendUrl}/api/v1/products/products`
       );
       return response.data.data;
     } catch (error) {
@@ -18,7 +20,7 @@ export class ProductService {
   async getProductById(id) {
     try {
       const response = await axios.get(
-        `http://34.27.55.167:8000/api/v1/products/products/${id}`
+        `${backendUrl}/api/v1/products/products/${id}`
       );
       return response.data.data;
     } catch (error) {
@@ -29,7 +31,7 @@ export class ProductService {
   async getProductByReviewId(id) {
     try {
       const response = await axios.get(
-        `http://34.27.55.167:8000/api/v1/products/products/reviews/${id}`
+        `${backendUrl}/api/v1/products/products/reviews/${id}`
       );
       return response.data.data;
     } catch (error) {
@@ -41,7 +43,7 @@ export class ProductService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.post(
-        `http://34.27.55.167:8000/api/v1/products/productReview/review/${id}`,
+        `${backendUrl}/api/v1/products/productReview/review/${id}`,
         data,
         {
           headers: {
@@ -58,7 +60,7 @@ export class ProductService {
   async searchProducts(query) {
     try {
       const response = await axios.get(
-        `http://34.27.55.167:8000/api/v1/products/search?query=${query}`
+        `${backendUrl}/api/v1/products/search?query=${query}`
       );
       return response.data.data;
     } catch (error) {
@@ -70,7 +72,7 @@ export class ProductService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.post(
-        "http://34.27.55.167:8000/api/v1/products/createProduct",
+        `${backendUrl}/api/v1/products/createProduct`,
         data,
         {
           headers: {
@@ -87,7 +89,7 @@ export class ProductService {
   async getAllCategories() {
     try {
       const response = await axios.get(
-        "http://34.27.55.167:8000/api/v1/products/categories"
+        `${backendUrl}/api/v1/products/categories`
       );
       return response.data.data;
     } catch (error) {
@@ -99,7 +101,7 @@ export class ProductService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.get(
-        "http://34.27.55.167:8000/api/v1/products/adminProducts",
+        `${backendUrl}/api/v1/products/adminProducts`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -116,7 +118,7 @@ export class ProductService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.put(
-        `http://34.27.55.167:8000/api/v1/products/productUpdate/${id}`,
+        `${backendUrl}/api/v1/products/productUpdate/${id}`,
         data,
         {
           headers: {
@@ -134,7 +136,7 @@ export class ProductService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.delete(
-        `http://34.27.55.167:8000/api/v1/products/productDelete/${id}`,
+        `${backendUrl}/api/v1/products/productDelete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -151,7 +153,7 @@ export class ProductService {
     try {
       const accessToken = Cookies.get("accessToken");
       const response = await axios.delete(
-        `http://34.27.55.167:8000/api/v1/products/productReviewDelete/${productId}/review/${reviewId}`,
+        `${backendUrl}/api/v1/products/productReviewDelete/${productId}/review/${reviewId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
