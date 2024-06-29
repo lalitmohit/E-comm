@@ -8,7 +8,7 @@ module "eks" {
   enable_irsa = true
 
   tags = {
-    cluster = "demo"
+    cluster = "demo" 
   }
 
   vpc_id = module.vpc.vpc_id
@@ -28,3 +28,4 @@ module "eks" {
     }
   }
 }
+
