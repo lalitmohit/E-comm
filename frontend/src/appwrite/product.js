@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 // const backendUrl = import.meta.env.VITE_BACKEND_URL
-const backendUrl = "https://e-comm-backnd.vercel.app";
+const backendUrl = "https://e-comm-bck.vercel.app";
 
 export class ProductService {
   constructor() {}

@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 // const backendUrl = import.meta.env.VITE_BACKEND_URL
-const backendUrl = "https://e-comm-backnd.vercel.app";
+const backendUrl = "https://e-comm-bck.vercel.app";
 export class AuthService {
   constructor() {
     // Initialization logic can be added here if needed
