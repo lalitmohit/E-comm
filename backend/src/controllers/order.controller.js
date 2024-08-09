@@ -126,8 +126,8 @@ export const payment  = asyncHandler(async (req, res, next) => {
         })),
 
         mode: "payment",
-        success_url: "http://localhost:5173/",
-        cancel_url: "http://localhost:5173/stepper",
+        success_url: "https://e-comm-bay-eight.vercel.app/",
+        cancel_url: "https://e-comm-bay-eight.vercel.app/stepper",
       });
       res.status(200).json({ url: session.url });
     } catch (error) {
